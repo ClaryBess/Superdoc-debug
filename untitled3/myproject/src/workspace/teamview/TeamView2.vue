@@ -39,7 +39,7 @@
             <div class="leader-item">
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
-              <MemberListItem2 :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem2>
+              <MemberListItem2 :memberItem="teamLeader"><h2 slot="deleteIcon"></h2></MemberListItem2>
             </div>
           </el-card>
 

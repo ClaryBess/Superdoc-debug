@@ -168,7 +168,7 @@ export default {
     },
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
-      this.profileUrl = "http://175.24.74.107:8081/" + this.userL.profileUrl;
+      this.profileUrl = "http://localhost:8081/"+ this.userL.profileUrl;
       this.iduser = "http://175.24.74.107:8081/" + this.userL.userID;
     },
   },

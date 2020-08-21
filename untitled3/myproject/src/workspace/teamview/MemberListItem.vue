@@ -3,7 +3,7 @@
     <div class="docs-item">
       <!-- 展示图片为成员头像 -->
       <!-- <img class="docimg" :src="memberItem.url" @click="itemClick"> -->
-      <img class="docimg" :src='memberItem.profileUrl' @click="itemClick" />
+      <img class="docimg" :src="'http://localhost:8081/'+memberItem.profileUrl" @click="itemClick" />
       <div class="docs-info" @click="itemClick">
         <p>{{memberItem.userName}}</p>
       </div>

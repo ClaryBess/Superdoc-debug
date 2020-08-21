@@ -109,7 +109,7 @@
             var tmp1 = content.birthday.toString().substring(0,9);
             var tmp2 = parseInt(content.birthday.toString().substring(9,10))+1;
             _this.ruleForm.birthday = tmp1+tmp2;
-            _this.ruleForm.profileUrl = "http://localhost:8081/"+content.profileUrl;
+            _this.profileUrl = "http://localhost:8081/"+content.profileUrl;
           })
           .catch(function (error) { // 请求失败处理
             console.log(error);
