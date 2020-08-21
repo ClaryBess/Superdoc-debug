@@ -16,7 +16,7 @@
               <div slot="header" class="clearfix">
                 <p>
                   <strong>个人空间</strong>
-                  <el-button class="btn" v-if="gai" type="text" @click="toEdit()">
+                  <el-button v-if="gai" class="btn" type="text" @click="toEdit()">
                     <i class="el-icon-edit-outline"></i>
                     修改信息
                   </el-button>
@@ -63,9 +63,11 @@
     name: "Homepage",
     inject:["reload"],
     components: {NavBar},
+
+    inject: ["reload"],
     data() {
       return {
-        gai: false,
+        gai:false,
         iduser:'',
         ruleForm: {
           profileUrl:'',
@@ -105,8 +107,10 @@
             _this.ruleForm.username = content.userName;
             _this.ruleForm.email = content.email;
             _this.ruleForm.gender = content.gender;
-            _this.ruleForm.birthday = content.birthday.toString().substring(0,10);
-            _this.ruleForm.profileUrl = "http://175.24.74.107:8080/"+content.profileUrl;
+            var tmp1 = content.birthday.toString().substring(0,9);
+            var tmp2 = parseInt(content.birthday.toString().substring(9,10))+1;
+            _this.ruleForm.birthday = tmp1+tmp2;
+            _this.profileUrl = "http://localhost:8081/"+content.profileUrl;
           })
           .catch(function (error) { // 请求失败处理
             console.log(error);
@@ -114,8 +118,13 @@
       },
       toEdit() {
         this.$router.push('/homepageedit/'+this.$route.params.id);
-      }
-    }
+      },
+      // fetchUser(){
+      //   this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      //   this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+      //   console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
+      // }
+    },
   }
 </script>
 

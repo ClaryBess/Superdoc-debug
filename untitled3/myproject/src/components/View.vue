@@ -17,7 +17,7 @@
               <el-form :model="Form" :rules="rule" ref="Form">
                 <el-row>
                   <el-col span="2">
-                    <img :src="headSrc" class="commentHead" />
+                    <img :src="'http://localhost:8081/'+headSrc" class="commentHead" />
                   </el-col>
                   <el-col span="22">
                     <el-form-item prop="content">
@@ -69,9 +69,9 @@
               <li v-for="(item,index) in commentItem" :key="index">
                 <div style="width: 100%;float: left">
                   <span style="width: 8.3%; float: left">
-                    <img :src="item.profileUrl" class="commentHead" />
+                    <img :src="'http://localhost:8081/'+item.profileUrl" class="commentHead"  @click="intoPage(item)" />
                   </span>
-                  <span style="float: left" class="commentName">{{item.userName}}</span>
+                  <span style="float: left" class="commentName"  @click="intoPage(item)">{{item.userName}}</span>
                 </div>
                 <p class="commentText">{{item.content}}</p>
                 <div style="width: 100%" class="commentTime">
@@ -525,6 +525,19 @@ export default {
           console.log(error);
         });
     },
+    intoPage(item){
+      var _this=this;
+      console.log(item.userName);
+      axios.post("http://127.0.0.1:8081/user/getUserByName", item.userName)
+        .then(function (response) {
+          console.log("对了");
+          console.log(response.data.userID);
+          _this.$router.push("/homepage/"+response.data.userID);
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
+    }
   },
   created() {
     this.docID = JSON.parse(this.$Base64.decode(this.$route.query.key)).id;
@@ -544,7 +557,7 @@ export default {
       this.$data.title +
       "》，点击链接查看：" +
       window.location.href;
-    this.$data.headSrc = userL.profileUrl;
+    this.headSrc = userL.profileUrl;
   },
 };
 </script>

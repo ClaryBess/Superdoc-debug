@@ -3,7 +3,7 @@
     <div class="docs-item" @click="itemClick" >
       <!-- 展示图片为成员头像 -->
       <!-- <img class="docimg" :src="memberItem.url" @click="itemClick"> -->
-      <img class="docimg" :src='memberItem.profileUrl'  @click="itemClick" />
+      <img class="docimg" :src="'http://localhost:8081/'+memberItem.profileUrl"  @click="itemClick" />
       <div class="docs-info">
         <p>{{memberItem.userName}}</p>
       </div>
@@ -16,6 +16,7 @@ import axios from "axios";
 
 export default {
   name: "MemberListItem2",
+  inject:['reload'],
   data() {
     return {};
   },
@@ -32,7 +33,7 @@ export default {
   methods: {
     itemClick() {
       var _this=this;
-      axios.post("http://127.0.0.1:8081/user/getUserByName", this.memberItem.userName)
+      axios.post("/user/getUserByName", this.memberItem.userName)
         .then(function (response) {
           console.log("对了");
           console.log(response.data.userID);

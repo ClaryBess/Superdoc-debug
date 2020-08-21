@@ -164,6 +164,7 @@ export default {
       }
     };
     return {
+      iduser:'',
       ruleForm: {
         number:1,
         profile: "",
@@ -190,7 +191,6 @@ export default {
     itemClick() {
       this.$router.push("/homepage/"+this.$route.params.id);
     },
-
     fetchUser(){
       var _this = this;
       axios.post("http://127.0.0.1:8081/user/getUser",this.$route.params.id)
@@ -198,8 +198,11 @@ export default {
           console.log("看这里！！！！！")
           console.log(response.data)
           var content = response.data;
+          _this.iduser=content.userID;
           _this.ruleForm.sex = content.gender;
-          _this.ruleForm.birth = content.birthday.toString().substring(0,10);
+          var tmp1 = content.birthday.toString().substring(0,9);
+          var tmp2 = parseInt(content.birthday.toString().substring(9,10))+1;
+          _this.ruleForm.birth = tmp1+tmp2;
           _this.ruleForm.fileList[0].url = "http://localhost:8081/"+content.profileUrl;
         })
         .catch(function (error) { // 请求失败处理
@@ -209,13 +212,14 @@ export default {
     },
     submitForm(formName) {
       var _this = this;
-      console.log(this.picture_url);
+      console.log("啊啊啊啊图片"+this.picture_url);
       if (this.picture_url==null || this.picture_url==undefined){
         this.picture_url="/file/03b0d39583f48206768a7534e55bcpng.png";
-      }
+      };
+      console.log("花园宝宝"+this.$route.params.id);
       axios
         .post("/user/edit", {
-          userID: this.userL.userID,
+          userID: this.$route.params.id,
           userName: this.ruleForm.username,
           email: this.ruleForm.email,
           password: this.ruleForm.pass,
@@ -227,7 +231,7 @@ export default {
           // console.log(response.data.status)
           if (response.data.status === 200) {
             sessionStorage.setItem("userL", JSON.stringify(response.data.data));
-            _this.$router.push("Homepage");
+            _this.$router.push("/homepage/"+_this.$route.params.id);
           } else {
             _this.$message({
               message: "修改失败",
@@ -273,7 +277,7 @@ export default {
   },
   created() {
     this.fetchUser();
-    this.ruleForm.fileList[0].url="http://175.24.74.107:8081"+ this.content.profileUrl
+    // this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
   },
 };
 </script>

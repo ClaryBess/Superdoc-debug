@@ -36,7 +36,9 @@
     <div class="right">
       <ul class="rightNav">
         <li class="dropdown">
-            <img :src="this.profileUrl" class="userhead" @click="clickimg"/>
+          <!--          <router-link :to="{name:'homepage',params:{id:'this.iduser'}}">-->
+          <img :src="this.profileUrl" class="userhead" @click="clickimg" />
+          <!--          </router-link>-->
         </li>
         <li>
           <div>
@@ -113,6 +115,10 @@ export default {
                   .then((res) => {
                     if (res.data.status === 200) {
                       _this.isID = true;
+                      this.$message({
+                        type: "success",
+                        message: "已发送申请",
+                      });
                       console.log(res);
                     }
                   })
@@ -158,11 +164,11 @@ export default {
     clickimg:function(){
       console.log(JSON.parse(sessionStorage.getItem("userL")).userID)
       this.$router.push('/homepage/'+JSON.parse(sessionStorage.getItem("userL")).userID);
+      window.location.reload();
     },
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
-      //console.log(this.userL);
-      this.profileUrl = "http://175.24.74.107:8081/" + this.userL.profileUrl;
+      this.profileUrl = "http://localhost:8081/"+ this.userL.profileUrl;
       this.iduser = "http://175.24.74.107:8081/" + this.userL.userID;
     },
   },
