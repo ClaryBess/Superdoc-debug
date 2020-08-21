@@ -138,6 +138,7 @@ export default {
         axios
           .post("/team/deleteDoc/" + this.teamID, this.docsItem.docID)
           .then((res) => {
+            console.log(this.teamID)
             console.log(res);
           })
           .catch((err) => {

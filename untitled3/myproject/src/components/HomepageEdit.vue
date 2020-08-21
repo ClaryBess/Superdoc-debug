@@ -36,7 +36,7 @@
                 <el-form-item label="头像" prop="fileList[0]">
                   <el-upload
                     class="upload-demo"
-                    action="http://localhost:8081/user/save"
+                    action="http://175.24.74.107:8081/user/save"
                     multiple
                     :limit="ruleForm.number"
                     list-type="picture-card"
@@ -174,7 +174,7 @@ export default {
         fileList: [
           {
             name: "默认头像.png",
-            url:'http://localhost:8081/file/03b0d39583f48206768a7534e55bcpng.png',
+            url:'http://175.24.74.107:8081/file/03b0d39583f48206768a7534e55bcpng.png',
           },
         ],
       },
@@ -188,14 +188,23 @@ export default {
   },
   methods: {
     itemClick() {
-      this.$router.push("homepage");
+      this.$router.push("/homepage/"+this.$route.params.id);
     },
 
     fetchUser(){
-      this.userL=JSON.parse(sessionStorage.getItem("userL"))
-      this.ruleForm.fileList[0].url="http://localhost:8081/"+this.userL.profileUrl;
-      this.ruleForm.sex=this.userL.gender;
-      this.ruleForm.birth=this.userL.birthday.toString().substring(0,10);
+      var _this = this;
+      axios.post("http://127.0.0.1:8081/user/getUser",this.$route.params.id)
+        .then(function (response) {
+          console.log("看这里！！！！！")
+          console.log(response.data)
+          var content = response.data;
+          _this.ruleForm.sex = content.gender;
+          _this.ruleForm.birth = content.birthday.toString().substring(0,10);
+          _this.ruleForm.fileList[0].url = "http://localhost:8081/"+content.profileUrl;
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
       // console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
     },
     submitForm(formName) {
@@ -205,7 +214,7 @@ export default {
         this.picture_url="/file/03b0d39583f48206768a7534e55bcpng.png";
       }
       axios
-        .post("http://127.0.0.1:8081/user/edit", {
+        .post("/user/edit", {
           userID: this.userL.userID,
           userName: this.ruleForm.username,
           email: this.ruleForm.email,
@@ -264,7 +273,7 @@ export default {
   },
   created() {
     this.fetchUser();
-    this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+    this.ruleForm.fileList[0].url="http://175.24.74.107:8081"+ this.content.profileUrl
   },
 };
 </script>

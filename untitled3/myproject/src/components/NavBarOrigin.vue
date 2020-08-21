@@ -70,7 +70,7 @@
       loginForm(formName){
         var _this=this
         //axios 需要 import,下面form 对象要与上面view 填写的一样
-        axios.post("http://127.0.0.1:8081/user/login",{
+        axios.post("/user/login",{
           userName:this.form.userName,
           password:this.form.password,
         })

@@ -225,7 +225,7 @@ export default {
     },
     fetchInfo(){
       var _this = this;
-      axios.post("http://127.0.0.1:8081/team/getInfo/" + this.$route.params.id)
+      axios.post("/team/getInfo/" + this.$route.params.id)
         .then(function (response) {
           var content = response.data;
           _this.info = content;
@@ -253,7 +253,7 @@ export default {
               var userL=JSON.parse(sessionStorage.getItem("userL"))
               console.log(this.$route.params.id);
               axios
-                .post("http://127.0.0.1:8081/#", {
+                .post("/", {
                   userId: userL.userID,
                   teamId: this.$route.params.id,
                   memberId: _this.formmember.input3
@@ -290,7 +290,7 @@ export default {
     },
     fetchLeader(){
       var _this = this;
-      axios.post("http://127.0.0.1:8081/team/getUser/" + this.$route.params.id)
+      axios.post("/team/getUser/" + this.$route.params.id)
         .then(function (response) {
           var content = JSON.parse(JSON.stringify(response.data));
           console.log(JSON.stringify(response.data));
@@ -320,7 +320,7 @@ export default {
               var userL=JSON.parse(sessionStorage.getItem("userL"))
               console.log(this.$route.params.id);
               axios
-                .post("http://127.0.0.1:8081/team/updateInfo/" + this.$route.params.id, _this.formInfo.info)
+                .post("/team/updateInfo/" + this.$route.params.id, _this.formInfo.info)
                 .then((res) => {
                   if(res.data.status === 200){
                     console.log(_this.formInfo.info);

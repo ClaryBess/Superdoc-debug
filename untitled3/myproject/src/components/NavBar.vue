@@ -36,9 +36,7 @@
     <div class="right">
       <ul class="rightNav">
         <li class="dropdown">
-          <router-link to="/homepage">
-            <img :src="headSrc" class="userhead" />
-          </router-link>
+            <img :src="this.profileUrl" class="userhead" @click="clickimg"/>
         </li>
         <li>
           <div>
@@ -53,14 +51,15 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "NavBar",
   inject: ["reload"],
   data() {
     return {
-      headSrc:
+      iduser:'',
+      profileUrl:
         "http://175.24.74.107:8081/file/9ef7d8c0-6754-4222-bb27-8316eed5d8eb.png",
       itemList: [
         {
@@ -156,9 +155,15 @@ export default {
           });
       }
     },
+    clickimg:function(){
+      console.log(JSON.parse(sessionStorage.getItem("userL")).userID)
+      this.$router.push('/homepage/'+JSON.parse(sessionStorage.getItem("userL")).userID);
+    },
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
+      //console.log(this.userL);
       this.profileUrl = "http://175.24.74.107:8081/" + this.userL.profileUrl;
+      this.iduser = "http://175.24.74.107:8081/" + this.userL.userID;
     },
   },
   created() {

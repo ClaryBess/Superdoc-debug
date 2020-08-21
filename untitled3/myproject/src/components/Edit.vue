@@ -179,7 +179,7 @@ export default {
         // 上传文件接口
         enableAutoSave: true,
         autoHeightEnabled: false,
-        serverUrl: "http://127.0.0.1:8081/ueditor/configs",
+        serverUrl: "http://175.24.74.107:8081/ueditor/configs",
         UEDITOR_HOME_URL: "/static/UEditor/",
       },
     };
@@ -203,7 +203,7 @@ export default {
             }
           }
           axios
-            .post("http://127.0.0.1:8081/doc", {
+            .post("http://175.24.74.107:8081/doc", {
               //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
               userID: userL.userID,
               title: this.docForm.title,
@@ -223,7 +223,7 @@ export default {
                 _this.$router.push({
                   path: "/detail",
                   query: {
-                    key: this.$Base64.encode(
+                    key: _this.$Base64.encode(
                       JSON.stringify({
                         id: response.data.data,
                       })
@@ -246,7 +246,7 @@ export default {
       console.log(this.$route.params.template);
       axios
         .post(
-          "http://127.0.0.1:8081/template/getContent/" +
+          "http://175.24.74.107:8081/template/getContent/" +
             this.$route.params.template
         )
         .then(function (response) {

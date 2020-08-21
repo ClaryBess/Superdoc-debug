@@ -77,7 +77,6 @@ export default {
     },
     fetchList() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
-      // console.log(this.userL)
       this.userID = this.userL.userID;
       axios
         .post("/browse/getBrowse", this.userID)
