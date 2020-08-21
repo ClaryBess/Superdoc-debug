@@ -186,7 +186,7 @@ export default {
     beginEdit() {
       var _this = this;
       axios
-        .post("/doc/beginEdit/" + this.$route.params.id)
+        .post("http://175.24.74.107:8081/doc/beginEdit/" + this.$route.params.id)
         .then(function (response) {
           if (response.data.status === 200) {
             console.log("set editable to 0");
@@ -215,12 +215,12 @@ export default {
           }
           var userL = JSON.parse(sessionStorage.getItem("userL"));
           axios
-            .post("/doc/edit", {
+            .post("http://175.24.74.107:8081/doc/edit", {
               //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
-              docID: this.$route.params.id,
+              docID: _this.$route.params.id,
               userID: userL.userID,
-              title: this.docForm.title,
-              content: this.docForm.doc,
+              title: _this.docForm.title,
+              content: _this.docForm.doc,
               privilege: pri,
               editable: 1,
             })
@@ -257,7 +257,7 @@ export default {
     getDoc: function () {
       var _this = this;
       this.axios
-        .post("/doc/get/" + this.$route.params.id)
+        .post("http://175.24.74.107:8081/doc/get/" + this.$route.params.id)
         .then(function (response) {
           if (response.data.status === 200) {
             var docL = JSON.parse(JSON.stringify(response.data.data));
@@ -288,7 +288,7 @@ export default {
     cancelEdit() {
       var _this = this;
       axios
-        .post("/doc/endEdit/" + this.$route.params.id)
+        .post("http://175.24.74.107:8081/doc/endEdit/" + this.$route.params.id)
         .then(function (response) {
           if (response.data.status === 200) {
             _this.$router.go(-1);
