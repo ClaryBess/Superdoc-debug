@@ -96,23 +96,23 @@
                 :visible.sync="dialog2"
                 class="pop"
               >
-                <div class="demo-drawer__content">
-                  <el-form :model="formmember">
-                    <el-form-item label=" 请输入用户ID：" class="drawer-item-menber">
-                      <el-input placeholder="请输入ID" v-model="formmember.input3" class="input-with-select">
-                        <el-button
-                          slot="append"
-                          type="primary"
-                          @click="submitFormMember('formmember')"
-                          icon="el-icon-search"
-                        ></el-button>
-                      </el-input>
-                    </el-form-item>
-                  </el-form>
-                </div>
-                <el-button style="float: right; padding: 3px 0" type="text" slot="reference">
-                  添加成员
-                </el-button>
+<!--                <div class="demo-drawer__content">-->
+<!--                  <el-form :model="formmember">-->
+<!--                    <el-form-item label=" 请输入用户ID：" class="drawer-item-menber">-->
+<!--                      <el-input placeholder="请输入ID" v-model="formmember.input3" class="input-with-select">-->
+<!--                        <el-button-->
+<!--                          slot="append"-->
+<!--                          type="primary"-->
+<!--                          @click="submitFormMember('formmember')"-->
+<!--                          icon="el-icon-search"-->
+<!--                        ></el-button>-->
+<!--                      </el-input>-->
+<!--                    </el-form-item>-->
+<!--                  </el-form>-->
+<!--                </div>-->
+<!--                <el-button style="float: right; padding: 3px 0" type="text" slot="reference">-->
+<!--                  添加成员-->
+<!--                </el-button>-->
               </el-popover>
 
 
