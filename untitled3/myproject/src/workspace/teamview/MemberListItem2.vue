@@ -16,6 +16,7 @@ import axios from "axios";
 
 export default {
   name: "MemberListItem2",
+  inject:['reload'],
   data() {
     return {};
   },
@@ -31,8 +32,17 @@ export default {
   },
   methods: {
     itemClick() {
-      // 点击成员进入成员个人页面
-      this.$router.push("/homepage");
+      var _this=this;
+      axios.post("http://127.0.0.1:8081/user/getUserByName", this.memberItem.userName)
+        .then(function (response) {
+          console.log("对了");
+          console.log(response.data.userID);
+          _this.$router.push("/homepage/"+response.data.userID);
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
+
     },
     deleteMem() {
       var _this=this;

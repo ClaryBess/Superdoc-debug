@@ -36,9 +36,9 @@
     <div class="right">
       <ul class="rightNav">
         <li class="dropdown">
-          <router-link to="/homepage">
-            <img :src="headSrc" class="userhead" />
-          </router-link>
+          <!--          <router-link :to="{name:'homepage',params:{id:'this.iduser'}}">-->
+          <img :src="this.profileUrl" class="userhead" @click="clickimg" />
+          <!--          </router-link>-->
         </li>
         <li>
           <div>
@@ -60,7 +60,8 @@ export default {
   inject: ["reload"],
   data() {
     return {
-      headSrc:
+      iduser:'',
+      profileUrl:
         "http://175.24.74.107:8081/file/9ef7d8c0-6754-4222-bb27-8316eed5d8eb.png",
       itemList: [
         {
@@ -114,6 +115,10 @@ export default {
                   .then((res) => {
                     if (res.data.status === 200) {
                       _this.isID = true;
+                      this.$message({
+                        type: "success",
+                        message: "已发送申请",
+                      });
                       console.log(res);
                     }
                   })
@@ -156,9 +161,15 @@ export default {
           });
       }
     },
+    clickimg:function(){
+      console.log(JSON.parse(sessionStorage.getItem("userL")).userID)
+      this.$router.push('/homepage/'+JSON.parse(sessionStorage.getItem("userL")).userID);
+      window.location.reload();
+    },
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
       this.profileUrl = "http://175.24.74.107:8081/" + this.userL.profileUrl;
+      this.iduser = "http://175.24.74.107:8081/" + this.userL.userID;
     },
   },
   created() {
