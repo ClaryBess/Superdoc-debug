@@ -220,19 +220,40 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var _this = this;
-          console.log(axios);
           var userL = JSON.parse(sessionStorage.getItem("userL"));
+          var pri = 0;
+          if(this.docForm.viewP === '1'){
+            pri += 1000;
+          }
+          else if(this.docForm.viewP === '2'){
+            pri += 2000;
+          }
+          if(this.docForm.editP === '1'){
+            pri += 100;
+          }
+          else if(this.docForm.editP === '2'){
+            pri += 200;
+          }
+          if(this.docForm.commentP === '1'){
+            pri += 10;
+          }
+          else if(this.docForm.commentP === '2'){
+            pri += 20;
+          }
+          if(this.docForm.shareP === '1'){
+            pri += 1;
+          }
+          else if(this.docForm.shareP === '2'){
+            pri += 2;
+          }
+          console.log('pri=' + pri);
           axios
             .post("/doc", {
               docID: this.$route.params.id,
               userID: userL.userID,
               title: this.docForm.title,
               content: this.docForm.doc,
-              privilege:
-                this.docForm.viewP * 1000 +
-                this.docForm.editP * 100 +
-                this.docForm.commentP * 10 +
-                this.docForm.shareP,
+              privilege: pri,
               isTeam: 1,
               team: _this.$route.params.tid,
             })
