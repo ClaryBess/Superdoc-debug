@@ -489,28 +489,40 @@ export default {
         _this.hasLogin = false;
     }
       else{
-        this.axios
+        _this.axios
           .post(
-            "http://175.24.74.107:8081/doc/checkPriEdit/" + _this.docID,
-            JSON.stringify(userL.userID)
+            "http://127.0.0.1:8081/doc/checkPriEdit/" + _this.docID,
+            JSON.stringify(userL.userID), {
+              headers: {
+                'content-type': 'application/json;charset=UTF-8'
+              }
+            }
           )
           .then(function (response) {
             _this.EditP = response.data;
             console.log("edit:" + response.data);
           });
-        this.axios
+        _this.axios
           .post(
-            "http://175.24.74.107:8081/checkPriComment/" + _this.docID,
-            JSON.stringify(userL.userID)
+            "http://127.0.0.1:8081/checkPriComment/" + _this.docID,
+            JSON.stringify(userL.userID), {
+              headers: {
+                'content-type': 'application/json;charset=UTF-8'
+              }
+            }
           )
           .then(function (response) {
             _this.CommentP = response.data;
             console.log("comment:" + response.data);
           });
-        this.axios
+        _this.axios
           .post(
-            "http://175.24.74.107:8081/doc/checkPriShare/" + _this.docID,
-            JSON.stringify(userL.userID)
+            "http://127.0.0.1:8081/doc/checkPriShare/" + _this.docID,
+            JSON.stringify(userL.userID), {
+              headers: {
+                'content-type': 'application/json;charset=UTF-8'
+              }
+            }
           )
           .then(function (response) {
             _this.ShareP = response.data;
