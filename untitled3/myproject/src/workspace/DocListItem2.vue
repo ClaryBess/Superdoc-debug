@@ -144,7 +144,7 @@ export default {
       } else if (this.currentview == 4) {
         //创建者团队文档
         axios
-          .post("/team/deleteDoc/" + this.teamID, this.docsItem.docID)
+          .post("/team/deleteDoc/" + this.teamID, this.TemItem.docID)
           .then((res) => {
             console.log(res);
           })
