@@ -93,8 +93,8 @@ export default {
         doc: "我是默认内容咿呀咿呀咿",
         viewP: "1",
         commentP: "1",
-        editP: "2",
-        shareP: "2",
+        editP: "1",
+        shareP: "1",
       },
       rule: {
         title: [
