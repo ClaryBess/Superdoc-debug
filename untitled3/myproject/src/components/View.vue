@@ -1,7 +1,12 @@
 <template>
   <el-container>
     <el-header>
-      <NavBar></NavBar>
+      <div v-if="hasLogin">
+        <NavBar></NavBar>
+      </div>
+      <div v-else>
+        <NavBarOrigin></NavBarOrigin>
+      </div>
     </el-header>
     <el-main>
       <el-page-header @back="goBack" :content="title"></el-page-header>
@@ -179,14 +184,16 @@
 <script>
 import axios from 'axios';
 import NavBar from "./NavBar";
+import NavBarOrigin from "./NavBarOrigin";
 // import QS from "qs";
 
 export default {
   name: "View",
-  components: { NavBar },
+  components: {NavBarOrigin, NavBar },
   inject: ["reload"],
   data() {
     return {
+      hasLogin: true,
       EditP: true,
       CommentP: true,
       ShareP: true,
@@ -312,28 +319,34 @@ export default {
     getCollect() {
       var _this = this;
       var userL = JSON.parse(sessionStorage.getItem("userL"));
-      axios
-        .post("http://175.24.74.107:8081/collect/collected", {
-          docID: _this.docID,
-          userID: userL.userID,
-        })
-        .then(function (response) {
-          if (
-            response.data.status === 200 &&
-            response.data.msg === "collected"
-          ) {
-            _this.hasCollect = true;
-          } else if (
-            response.data.status === 200 &&
-            response.data.msg === "not collected"
-          ) {
-            _this.hasCollect = false;
-          }
-        })
-        .catch(function (error) {
-          // 请求失败处理
-          console.log(error);
-        });
+      if(userL === null){
+        _this.hasCollect = false;
+      }
+      else{
+        axios
+          .post("http://175.24.74.107:8081/collect/collected", {
+            docID: _this.docID,
+            userID: userL.userID,
+          })
+          .then(function (response) {
+            if (
+              response.data.status === 200 &&
+              response.data.msg === "collected"
+            ) {
+              _this.hasCollect = true;
+            } else if (
+              response.data.status === 200 &&
+              response.data.msg === "not collected"
+            ) {
+              _this.hasCollect = false;
+            }
+          })
+          .catch(function (error) {
+            // 请求失败处理
+            console.log(error);
+          });
+      }
+
     },
     CancelCollect() {
       var _this = this;
@@ -466,38 +479,49 @@ export default {
     },
     getPri() {
       var _this = this;
+      console.log("get pri");
       var userL = JSON.parse(sessionStorage.getItem("userL"));
-      this.axios
-        .post(
-          "http://175.24.74.107:8081/doc/checkPriEdit/" + _this.docID,
-          JSON.stringify(userL.userID)
-        )
-        .then(function (response) {
-          _this.EditP = response.data;
-          console.log("edit:" + response.data);
-        });
-      this.axios
-        .post(
-          "http://175.24.74.107:8081/checkPriComment/" + _this.docID,
-          JSON.stringify(userL.userID)
-        )
-        .then(function (response) {
-          _this.CommentP = response.data;
-          console.log("comment:" + response.data);
-        });
-      this.axios
-        .post(
-          "http://175.24.74.107:8081/doc/checkPriShare/" + _this.docID,
-          JSON.stringify(userL.userID)
-        )
-        .then(function (response) {
-          _this.ShareP = response.data;
-          console.log("share:" + response.data);
-        })
-        .catch(function (error) {
-          // 请求失败处理
-          console.log(error);
-        });
+      console.log(JSON.stringify(userL));
+      if(userL === null){
+        _this.EditP = false;
+        _this.CommentP = false;
+        _this.ShareP = false;
+        _this.hasLogin = false;
+    }
+      else{
+        this.axios
+          .post(
+            "http://175.24.74.107:8081/doc/checkPriEdit/" + _this.docID,
+            JSON.stringify(userL.userID)
+          )
+          .then(function (response) {
+            _this.EditP = response.data;
+            console.log("edit:" + response.data);
+          });
+        this.axios
+          .post(
+            "http://175.24.74.107:8081/checkPriComment/" + _this.docID,
+            JSON.stringify(userL.userID)
+          )
+          .then(function (response) {
+            _this.CommentP = response.data;
+            console.log("comment:" + response.data);
+          });
+        this.axios
+          .post(
+            "http://175.24.74.107:8081/doc/checkPriShare/" + _this.docID,
+            JSON.stringify(userL.userID)
+          )
+          .then(function (response) {
+            _this.ShareP = response.data;
+            console.log("share:" + response.data);
+          })
+          .catch(function (error) {
+            // 请求失败处理
+            console.log(error);
+          });
+      }
+
     },
     getCollectNum() {
       var _this = this;
